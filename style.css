@@ -13,7 +13,7 @@
 @media only screen
 and (min-device-width : 320px) and (max-device-width : 480px) {
   .container{
-    background: url(https://cdn.dribbble.com/users/925716/screenshots/3333720/attachments/722375/night.png);
+    background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);
     width:100%;
     height:100vh;
     background-size: auto;
