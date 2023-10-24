@@ -6,20 +6,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>iWeather | Sachin</title>
+    
 </head>
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=512&id=ZBWgLOFqpYdO&format=png">
+<link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=512&id=ZBWgLOFqpYdO&format=png">
 <body>
     <div class="container">
-        <div class="searchbar">
-            <input type="text" placeholder="Search for a city..." id="cityInput"/>
-            <button onclick="getCity()"><i data-lucide="search"></i>
-            </button>
-        </div>
+        
         <div class="main">
             <h1 id="name">--</h1>
             <h1 id="temp">--</h1>
             <h1 id="state">--</h1>
         </div>
+        <div class="box">
+            <div class="icon"><img width="100px" id="img" src="" alt=""></div>
+            <ul>
+                <li class="feel">Feels Like: <span class="feels"></span></li>
+                <li class="max">Max Temperature: <span class="temp-max"></span></li>
+                <li class="min">Min Temperature: <span class="temp-min"></span></li>
+                <li class="longitude">H:   <span class="l"></span> L: <span class="lat"></span></li>
+                <li class="pressure">Pressure: <span class="p"></span></li>
+            </ul>
+        </div>
+        <div class="hum-spe">
+            
+            <div class="humidity">
+                <h1 class="head">Humidity:</h1>
+                
+                <div class="datamain"><i style="margin: 10px;" width="40" height="40" color="white" data-lucide="droplets" ></i><h1 class="humid"></h1></div>
+
+            </div>
+            
+            <div class="speed">
+                <h1 class="head">Speed:</h1>
+                <div class="datamain">
+                    <i style="margin: 10px;" width="40" height="40" color="white" data-lucide="wind"></i><h1 class="spd"></h1><span class="km"> km/h</span>
+                </div>
+            </div>
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search for a city..." id="cityInput"/>
+            <button onclick="getCity()"><i data-lucide="search"></i>
+            </button>
+        </div>
+    </div>
     </div>
     <script src="script.js"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -29,7 +58,7 @@
 <script>
     lucide.createIcons();
   </script>
-  <script>
+ <script>
     const apiKey ="c1c1f51e8874aa779d9b285da992a031"
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q="
 const searchBox= document.querySelector('.searchbar input');
@@ -53,7 +82,9 @@ async function checkWeather(city){
             
         }
        else if (weather == "Clouds"){
-        container.style.background="url(https://i.pinimg.com/564x/1f/09/1c/1f091cda03766c0ecebfa5cc8aee3ab3.jpg)"
+        container.style.background="url(https://images.unsplash.com/photo-1603288967520-f3e04381dc02?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdWR5JTIwd2VhdGhlcnxlbnwwfHwwfHx8MA%3D%3D)"
+        container.style.backgroundPosition='center'
+        container.style.backgroundSize="cover"
        }
        else if (weather == "Clear"){
         container.style.background="url(https://static.wixstatic.com/media/59fc92_ecf911731bca481abc79cbf4490de3db~mv2.jpg/v1/fill/w_640,h_1296,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/59fc92_ecf911731bca481abc79cbf4490de3db~mv2.jpg)"
@@ -70,10 +101,36 @@ async function checkWeather(city){
        }
     }
     bg()
+    var icon = data.weather[0].icon
+    document.getElementById('img').src=`http://openweathermap.org/img/wn/${icon}.png`
+
+    var feel = data.main.feels_like
+    document.querySelector('.feels').innerHTML=Math.round(feel)+"°C";
+
+    var tempMax = data.main.temp_max;
+    document.querySelector('.temp-max').innerHTML=(Math.round(tempMax)+2)+"°C";
+
+    var tempMin = data.main.temp_min;
+    document.querySelector('.temp-min').innerHTML=(Math.round(tempMin)-3)+"°C";
+
+    var long = data.coord.lon;
+    document.querySelector('.l').innerHTML=Math.round(long)+"°E";
+
+    var lat = data.coord.lat;
+    document.querySelector('.lat').innerHTML=Math.round(lat)+"°N";
+
+    var p = data.main.pressure;
+    document.querySelector('.p').innerHTML=p+" hPa";
+
+    var humid = data.main.humidity;
+    document.querySelector('.humid').innerHTML=humid+"%";
+
+    var speed = data.wind.speed;
+    document.querySelector('.spd').innerHTML=Math.round(speed*3.6);
 }
  searchBtn,addEventListener("click",()=>{
     checkWeather(searchBox.value)
- }
+ } 
  )
 
 
